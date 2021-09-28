@@ -10,66 +10,45 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
-
-  const [isOpen, setIsOpen] = React.useState(false)
+  // const [isConfirmationPopupOpen, setisConfirmationPopupOpen] = React.useState(false)
+  const [selectedCard, setSelectedCard] = React.useState(false)
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
-    setIsOpen(true)
   }
-  
+
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
-    setIsOpen(true)
   }
-  
+
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true)
-    setIsOpen(true)
+  }
+
+  function handleCardClick(data) {
+    setSelectedCard(data)
   }
 
   function closeAllPopups() {
-    if (isEditProfilePopupOpen) {
-      setIsEditAvatarPopupOpen(false)
-      setIsOpen(false)
-    }
-    if (isAddPlacePopupOpen) {
-      setIsEditProfilePopupOpen(false)
-      setIsOpen(false)
-    }
-    if (isEditAvatarPopupOpen) {
-      setIsAddPlacePopupOpen(false)
-      setIsOpen(false)
-    }
+    setIsEditAvatarPopupOpen(false)
+    setIsEditProfilePopupOpen(false)
+    setIsAddPlacePopupOpen(false)
+    setSelectedCard(false)
   }
 
   return (
     <>
       <div className="page">
         <Header />
-        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} />
+        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
+        onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
         <Footer />
-        <PopupWithForm name="edit-profile" title="Редактировать профиль" isOpen={isOpen} onClose={closeAllPopups} />
-        <PopupWithForm name="add-card" title="Новое место" isOpen={isOpen} onClose={closeAllPopups} />
-        <PopupWithForm name="change-avatar" title="Обновить аватар" isOpen={isOpen} onClose={closeAllPopups} />
-        <PopupWithForm name="confirm-deletion" title="Вы уверены?" isOpen={isOpen} onClose={closeAllPopups} />
-        <ImagePopup />
+        <PopupWithForm name="edit-profile" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <PopupWithForm name="add-card" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
+        <PopupWithForm name="change-avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
+        {/* <PopupWithForm name="confirm-deletion" title="Вы уверены?" isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} /> */}
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
-      <template className="card-template">
-        <div className="card">
-          <li className="element">
-            <img className="element__image" />
-            <button className="element__delete-button" type="button"></button>
-            <div className="element__info">
-              <h2 className="element__title"></h2>
-              <div className="element__like-area">
-                <button className="element__like-button" type="button"></button>
-                <span className="element__like-counter">0</span>
-              </div>
-            </div>
-          </li>
-        </div>
-      </template>
     </>
   );
 }
