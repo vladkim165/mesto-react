@@ -4,14 +4,17 @@ import Main from './Main/Main.js'
 import Footer from './Footer/Footer.js'
 import PopupWithForm from './PopupWithForm/PopupWithForm.js'
 import ImagePopup from './ImagePopup/ImagePopup.js'
+import api from '../utils/Api.js'
+import CurrentUserContext from '../contexts/CurrentUserContext.js'
 
 function App() {
 
+  const [currentUser, setCurrentUser] = React.useState({})
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
   // const [isConfirmationPopupOpen, setisConfirmationPopupOpen] = React.useState(false)
-  const [selectedCard, setSelectedCard] = React.useState({name: '', link: ''})
+  const [selectedCard, setSelectedCard] = React.useState({ name: '', link: '' })
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -33,10 +36,18 @@ function App() {
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
-    setSelectedCard({name: '', link: ''})
+    setSelectedCard({ name: '', link: '' })
   }
 
+  React.useState(() => {
+    api.getUserInfo()
+      .then((userInfo) => {
+        setCurrentUser(userInfo)
+      })
+  }, [])
+
   return (
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
@@ -88,6 +99,7 @@ function App() {
         {/* <PopupWithForm name="confirm-deletion" title="Вы уверены?" isOpen={isConfirmationPopupOpen} onClose={closeAllPopups} /> */}
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
+    </CurrentUserContext.Provider>
   );
 }
 
