@@ -30,12 +30,12 @@ function Main(props) {
 
     if (isLiked) {
       api.unlikeCard(card._id).then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards((prevState) => prevState.map((c) => c._id === card._id ? newCard : c));
       });
     }
     else {
       api.likeCard(card._id).then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards((prevState) => prevState.map((c) => c._id === card._id ? newCard : c));
       });
     }
 

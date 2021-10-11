@@ -6,10 +6,11 @@ import PopupWithForm from './PopupWithForm/PopupWithForm.js'
 import ImagePopup from './ImagePopup/ImagePopup.js'
 import api from '../utils/Api.js'
 import CurrentUserContext from '../contexts/CurrentUserContext.js'
+import EditProfilePopup from './EditProfilePopup/EditProfilePopup.js'
 
 function App() {
 
-  const [currentUser, setCurrentUser] = React.useState({})
+  const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' })
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
@@ -39,6 +40,14 @@ function App() {
     setSelectedCard({ name: '', link: '' })
   }
 
+  function handleUpdateUser(user) {
+    api.setUserInfo(user)
+      .then((userInfo) => {
+        setCurrentUser(userInfo)
+        closeAllPopups()
+      })
+  }
+
   React.useState(() => {
     api.getUserInfo()
       .then((userInfo) => {
@@ -53,22 +62,7 @@ function App() {
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
         <Footer />
-        <PopupWithForm name="edit-profile" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}
-          children={(
-            <>
-              <section className="form__section">
-                <input className="form__field form__field_input_name" type="text" name="name" id="name-input" required
-                  autoComplete="off" minLength="2" maxLength="40" />
-                <span className="form__field-error" id="name-input-error"></span>
-              </section>
-              <section className="form__section">
-                <input className="form__field form__field_input_bio" type="text" name="info" id="bio-input" required
-                  autoComplete="off" minLength="2" maxLength="200" />
-                <span className="form__field-error" id="bio-input-error"></span>
-              </section>
-            </>
-          )}
-        />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
         <PopupWithForm name="add-card" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
           children={(
             <>
