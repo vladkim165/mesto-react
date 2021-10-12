@@ -1,50 +1,20 @@
 import React from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
-import api from '../../utils/Api.js';
 import Card from '../Card/Card.js'
 
 function Main(props) {
 
   const [userName, setUserName] = React.useState('')
   const [userDescription, setUserDescription] = React.useState('')
-  const [cards, setCards] = React.useState([])
 
+  
   const userContext = React.useContext(CurrentUserContext)
-
-  React.useEffect(() => {
-    api.getCardItems()
-      .then((cardsData) => {
-        setCards(cardsData)
-      })
-  }, [])
 
   React.useEffect(() => {
     setUserName(userContext.name)
     setUserDescription(userContext.about)
     props.onAvatarChange(userContext.avatar)
-  }, [userContext, props])
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === userContext._id);
-
-    if (isLiked) {
-      api.unlikeCard(card._id).then((newCard) => {
-        setCards((prevState) => prevState.map((c) => c._id === card._id ? newCard : c));
-      });
-    }
-    else {
-      api.likeCard(card._id).then((newCard) => {
-        setCards((prevState) => prevState.map((c) => c._id === card._id ? newCard : c));
-      });
-    }
-
-  }
-
-  function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      setCards((state) => state.filter((c) => card._id !== c._id))
-    })
-  }
+  }, [userContext])
 
   return (
     <main className="content">
@@ -61,9 +31,9 @@ function Main(props) {
       </section>
       <section className="elements">
         <ul className="elements__list">
-          {cards.map((cardData) => {
+          {props.cards.map((cardData) => {
             return (
-              <Card card={cardData} key={cardData._id} onCardClick={props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
+              <Card card={cardData} key={cardData._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete} />
             )
           })}
         </ul>

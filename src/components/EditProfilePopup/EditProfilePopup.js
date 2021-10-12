@@ -26,8 +26,8 @@ const EditProfilePopup = (props) => {
   }
 
   React.useEffect(() => {
-      setName(userContext.name)
-      setDescription(userContext.about)
+    setName(userContext.name)
+    setDescription(userContext.about)
   }, [userContext])
 
   return (
