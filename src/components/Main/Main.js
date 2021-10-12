@@ -7,7 +7,6 @@ function Main(props) {
 
   const [userName, setUserName] = React.useState('')
   const [userDescription, setUserDescription] = React.useState('')
-  const [userAvatar, setUserAvatar] = React.useState('')
   const [cards, setCards] = React.useState([])
 
   const userContext = React.useContext(CurrentUserContext)
@@ -22,8 +21,8 @@ function Main(props) {
   React.useEffect(() => {
     setUserName(userContext.name)
     setUserDescription(userContext.about)
-    setUserAvatar(userContext.avatar)
-  }, [userContext])
+    props.onAvatarChange(userContext.avatar)
+  }, [userContext, props])
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === userContext._id);
@@ -51,7 +50,7 @@ function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__avatar">
-          <img className="profile__avatar-img" src={userAvatar} alt="Аватар профиля" onClick={props.onEditAvatar} />
+          <img className="profile__avatar-img" src={props.avatarUrl} alt="Аватар профиля" onClick={props.onEditAvatar} />
         </div>
         <div className="profile__info">
           <h1 className="profile__title">{userName}</h1>
