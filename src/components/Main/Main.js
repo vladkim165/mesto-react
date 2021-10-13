@@ -14,7 +14,7 @@ function Main(props) {
     setUserName(userContext.name)
     setUserDescription(userContext.about)
     props.onAvatarChange(userContext.avatar)
-  }, [userContext])
+  }, [userContext, props])
 
   return (
     <main className="content">

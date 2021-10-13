@@ -1,16 +1,11 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm'
-import CurrentUserContext from '../../contexts/CurrentUserContext'
 
 function AddPlacePopup(props) {
 
-  const userContext = React.useContext(CurrentUserContext)
-
   function handleAddPlaceSubmit(e) {
     e.preventDefault()
-    const owner = {_id: userContext._id}
-    const likes = []
-    props.onAddPlace({name: nameValue, link: imageValue, owner, likes})
+    props.onAddPlace({name: nameValue, link: imageValue})
   }
 
   const [nameValue, setNameValue] = React.useState('')
