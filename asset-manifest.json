@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/mesto-react/static/css/main.313bf883.chunk.css",
+    "main.js": "/mesto-react/static/js/main.a259b534.chunk.js",
+    "main.js.map": "/mesto-react/static/js/main.a259b534.chunk.js.map",
+    "runtime-main.js": "/mesto-react/static/js/runtime-main.6d430579.js",
+    "runtime-main.js.map": "/mesto-react/static/js/runtime-main.6d430579.js.map",
+    "static/js/2.5014fffe.chunk.js": "/mesto-react/static/js/2.5014fffe.chunk.js",
+    "static/js/2.5014fffe.chunk.js.map": "/mesto-react/static/js/2.5014fffe.chunk.js.map",
+    "static/js/3.68066228.chunk.js": "/mesto-react/static/js/3.68066228.chunk.js",
+    "static/js/3.68066228.chunk.js.map": "/mesto-react/static/js/3.68066228.chunk.js.map",
+    "index.html": "/mesto-react/index.html",
+    "static/css/main.313bf883.chunk.css.map": "/mesto-react/static/css/main.313bf883.chunk.css.map",
+    "static/js/2.5014fffe.chunk.js.LICENSE.txt": "/mesto-react/static/js/2.5014fffe.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/mesto-react/static/media/pen-button.6c7bf054.svg",
+    "static/media/logo.bbe2a6ea.svg": "/mesto-react/static/media/logo.bbe2a6ea.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6d430579.js",
+    "static/js/2.5014fffe.chunk.js",
+    "static/css/main.313bf883.chunk.css",
+    "static/js/main.a259b534.chunk.js"
+  ]
+}
