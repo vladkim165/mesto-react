@@ -8,7 +8,7 @@ function ImagePopup(props) {
         <h2 className="popup__image-title">{props.card.name}</h2>
         <img className="popup__background-image"
           src={props.card.link}
-          alt="Изображение карточки" />
+          alt={props.card.link} />
       </div>
     </div>
   )

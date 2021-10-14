@@ -17,12 +17,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
   // const [isConfirmationPopupOpen, setisConfirmationPopupOpen] = React.useState(false)
   const [selectedCard, setSelectedCard] = React.useState({ name: '', link: '' })
-  const [userAvatar, setUserAvatar] = React.useState('')
   const [cards, setCards] = React.useState([])
-
-  function handleChangeAvatar(url) {
-    setUserAvatar(url)
-  }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -61,8 +56,7 @@ function App() {
   function handleUpdateAvatar(url) {
     api.changeAvatar(url)
       .then((res) => {
-        setUserAvatar(res.avatar)
-        console.log(res)
+        setCurrentUser({...currentUser, avatar: res.avatar})
         closeAllPopups()
       })
       .catch((err) => {
@@ -70,7 +64,7 @@ function App() {
       })
   }
 
-  React.useState(() => {
+  React.useEffect(() => {
     api.getUserInfo()
       .then((userInfo) => {
         setCurrentUser(userInfo)
@@ -121,8 +115,13 @@ function App() {
   }
 
   function handleAddPlace(card) {
-    api.addNewCard(card).then(res => setCards([res, ...cards]))
-    closeAllPopups()
+    api.addNewCard(card).then(res => {
+      setCards([res, ...cards])
+      closeAllPopups()
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`)
+    })
   }
 
   return (
@@ -131,7 +130,7 @@ function App() {
         <Header />
         <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick}
           onCardLike={handleCardLike} onCardDelete={handleCardDelete} cards={cards}
-          onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} avatarUrl={userAvatar} onAvatarChange={handleChangeAvatar} />
+          onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
         <Footer />
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
         <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlace} />
@@ -143,5 +142,5 @@ function App() {
   );
 }
 
-export default App;
+export default App
 
